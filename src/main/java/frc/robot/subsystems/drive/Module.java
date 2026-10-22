@@ -11,6 +11,7 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.kinematics.SwerveDriveKinematics;
 import org.wpilib.math.kinematics.SwerveModulePosition;
 import org.wpilib.math.util.Units;
 import org.wpilib.util.Alert;
@@ -39,14 +40,14 @@ public class Module {
     this.index = index;
     this.constants = constants;
     driveDisconnectedAlert =
-        new Alert(
+        new Alert( "Drivetrain",
             "Disconnected drive motor on module " + Integer.toString(index) + ".",
             Level.HIGH);
     turnDisconnectedAlert =
-        new Alert(
+        new Alert("Drivetrain",
             "Disconnected turn motor on module " + Integer.toString(index) + ".", Level.HIGH);
     turnEncoderDisconnectedAlert =
-        new Alert(
+        new Alert("Drivetrain",
             "Disconnected turn encoder on module " + Integer.toString(index) + ".",
             Level.HIGH);
   }
@@ -114,7 +115,7 @@ public class Module {
   }
 
   /** Returns the module state (turn angle and drive velocity). */
-  public SwerveModuleState getState() {
+  public SwerveDriveKinematics getState() {
     return new SwerveModuleState(getVelocityMetersPerSec(), getAngle());
   }
 
