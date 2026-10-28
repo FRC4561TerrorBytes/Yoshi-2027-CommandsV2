@@ -12,7 +12,7 @@ import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.math.kinematics.SwerveModulePosition;
 import org.wpilib.math.kinematics.SwerveModuleVelocity;
 import org.wpilib.math.util.Units;
-import org.wpilib.driverstation.Alert;
+import org.wpilib.util.Alert;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -39,20 +39,22 @@ public class Module {
     this.io = io;
     this.index = index;
     this.constants = constants;
+
+    String moduleAlertPrefix = "Module " + index;
     driveDisconnectedAlert =
-      new Alert(
-        "Drivetrain",
-        "Disconnected drive motor on module " + index + ".",
+        new Alert(
+            moduleAlertPrefix + " Drive",
+            "Disconnected drive motor on module " + index + ".",
             Alert.Level.HIGH);
     turnDisconnectedAlert =
-      new Alert(
-        "Drivetrain",
-        "Disconnected turn motor on module " + index + ".",
-        Alert.Level.HIGH);
+        new Alert(
+            moduleAlertPrefix + " Turn",
+            "Disconnected turn motor on module " + index + ".",
+            Alert.Level.HIGH);
     turnEncoderDisconnectedAlert =
-      new Alert(
-        "Drivetrain",
-        "Disconnected turn encoder on module " + index + ".",
+        new Alert(
+            moduleAlertPrefix + " Turn Encoder",
+            "Disconnected turn encoder on module " + index + ".",
             Alert.Level.HIGH);
   }
 
@@ -89,7 +91,7 @@ public class Module {
   /** Runs the module with the specified output while controlling to zero degrees. */
   public void runCharacterization(double output) {
     io.setDriveOpenLoop(output);
-    io.setTurnPosition(Rotation2d.kZero);
+    io.setTurnPosition(Rotation2d.ZERO);
   }
 
   /** Disables all outputs to motors. */

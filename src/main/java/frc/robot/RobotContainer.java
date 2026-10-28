@@ -7,12 +7,13 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import org.littletonrobotics.junction.networktables.LoggedNetworkChooser;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
-import org.wpilib.command2.button.CommandNiDsXboxController;
+import org.wpilib.command2.button.CommandXboxController;
 import org.wpilib.command2.sysid.SysIdRoutine;
 import org.wpilib.driverstation.GenericHID;
+import org.wpilib.driverstation.XboxController;
 import org.wpilib.math.geometry.Pose2d;
 import org.wpilib.math.geometry.Rotation2d;
 
@@ -38,10 +39,10 @@ public class RobotContainer {
   private final Drive drive;
 
   // Controller
-  private final CommandNiDsXboxController controller = new CommandNiDsXboxController(0);
+  private final CommandXboxController controller = new CommandXboxController(0);
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
+  private final LoggedNetworkChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -101,23 +102,23 @@ public class RobotContainer {
     }
 
     // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    autoChooser = new LoggedNetworkChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Set up SysId routines
-    autoChooser.addOption(
+    autoChooser.add(
         "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
-    autoChooser.addOption(
+    autoChooser.add(
         "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
-    autoChooser.addOption(
+    autoChooser.add(
         "Drive SysId (Quasistatic Forward)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
+        drive.sysIdQuasistatic(SysIdRoutine.Direction.FORWARD));
+    autoChooser.add(
         "Drive SysId (Quasistatic Reverse)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        drive.sysIdQuasistatic(SysIdRoutine.Direction.REVERSE));
+    autoChooser.add(
+        "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.FORWARD));
+    autoChooser.add(
+        "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.REVERSE));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -146,7 +147,7 @@ public class RobotContainer {
                 drive,
                 () -> -controller.getLeftY(),
                 () -> -controller.getLeftX(),
-                () -> Rotation2d.kZero));
+                () -> Rotation2d.ZERO));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -158,7 +159,7 @@ public class RobotContainer {
             Commands.runOnce(
                     () ->
                         drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
+                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.ZERO)),
                     drive)
                 .ignoringDisable(true));
   }

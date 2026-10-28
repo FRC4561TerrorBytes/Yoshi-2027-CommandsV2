@@ -34,7 +34,7 @@ import org.wpilib.math.linalg.Matrix;
 import org.wpilib.math.numbers.N1;
 import org.wpilib.math.numbers.N3;
 import org.wpilib.math.system.DCMotor;
-import org.wpilib.driverstation.Alert;
+import org.wpilib.util.Alert;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.ModuleConfig;
@@ -88,7 +88,7 @@ public class Drive extends SubsystemBase {
       new Alert( "Gyro", "Disconnected gyro, using kinematics as fallback.", Alert.Level.HIGH);
 
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
-  private Rotation2d rawGyroRotation = Rotation2d.kZero;
+  private Rotation2d rawGyroRotation = Rotation2d.ZERO;
   private SwerveModulePosition[] lastModulePositions = // For delta tracking
       new SwerveModulePosition[] {
         new SwerveModulePosition(),
@@ -97,7 +97,7 @@ public class Drive extends SubsystemBase {
         new SwerveModulePosition()
       };
   private SwerveDrivePoseEstimator poseEstimator =
-      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, Pose2d.kZero);
+      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, Pose2d.ZERO);
 
   public Drive(
       GyroIO gyroIO,
@@ -254,7 +254,7 @@ public class Drive extends SubsystemBase {
   public void stopWithX() {
     Rotation2d[] headings = new Rotation2d[4];
     for (int i = 0; i < 4; i++) {
-      headings[i] = getModuleTranslations()[i].getAngle();
+      headings[i] = getModuleTranslations()[i].getAngle().get();
     }
     kinematics.resetHeadings(headings);
     stop();

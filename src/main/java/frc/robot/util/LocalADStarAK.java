@@ -16,7 +16,7 @@ import org.littletonrobotics.junction.LogTable;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
 import org.wpilib.math.geometry.Translation2d;
-import org.wpilib.math.util.Pair;
+import org.wpilib.util.Pair;
 
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
