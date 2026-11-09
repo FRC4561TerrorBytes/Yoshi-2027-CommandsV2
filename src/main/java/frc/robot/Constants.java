@@ -25,7 +25,24 @@ public final class Constants {
     /** Running a physics simulator. */
     SIM,
 
-    /** Replaying from a log file. */
+    /** Replaying FROM a log file. */
     REPLAY
   }
+
+  public static final int ELEVATORMOTOR1_ID = 0;
+  public static final int ELEVATORMOTOR2_ID = 0;
+  public static final int ELEVATORCANCODER1_ID = 0;
+  public static final int ELEVATORCANCODER1_TEETH = 18;
+  public static final int ELEVATORCANCODER2_ID = 0;
+  public static final int ELEVATORCANCODER2_TEETH = 19;  
+  public static final double ELEVATOR_GEAR_RATIO = 20/40;
+  public static final double ELEVATOR_ROTATIONS_PER_INCH = 1; // edit and find out actual
+  public static final double ELEVATOR_SUPPLY_CURRENT_LIMIT = 60;
+  public static final double ELEVATOR_STATOR_CURRENT_LIMIT = 0;
+  public static final int ELEVATORCANCODER1_KEY = 19;
+  public static final int ELEVATORCANCODER2_KEY = 324;
+  public static final int ELEVATOR_MAX_STEPS = 342;
+
+  //in inches
+  public static final double ELEVATOR_MAX_RANGE = 64.9375;
 }
